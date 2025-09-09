@@ -192,7 +192,10 @@ async def test_update_ticket_status_api(
         require_agent: agent
     }):
         payload = {"status": "close"}
-        response = await client.patch(f"/tickets/{ticket.id}/status", json=payload)
+        response = await client.patch(
+            f"/tickets/{ticket.id}/status",
+            json=payload
+            )
         assert response.status_code == 200
         data = response.json()
         assert data["status"] == "close"

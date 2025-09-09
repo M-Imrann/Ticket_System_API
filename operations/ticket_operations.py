@@ -49,7 +49,7 @@ async def get_ticket(
     Returns:
         Optional[models.Ticket]: The ticket object or None if not found.
     """
-    result = await db.execute(
+    ticket = await db.execute(
         select(models.Ticket)
         .options(
             joinedload(models.Ticket.replies),
@@ -58,7 +58,7 @@ async def get_ticket(
         )
         .where(models.Ticket.id == ticket_id)
     )
-    return result.scalars().first()
+    return ticket.scalars().first()
 
 
 async def add_reply(

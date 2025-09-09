@@ -68,18 +68,11 @@ async def login(
         password=form.password
     )
     if user is None:
-        # Determine if user exists for better error message
-        user_exists = await auth_operation.get_user_by_email(db, form.username)
-        if not user_exists:
-            raise HTTPException(
-                status_code=404,
-                detail="User not found"
-            )
-        else:
-            raise HTTPException(
-                status_code=401,
-                detail="Incorrect password"
-            )
+        raise HTTPException(
+            status_code=404,
+            detail="Invalid Email"
+        )
+
     # Create JWT token
     token = auth.create_access_token({"sub": user.email})
     return schemas.Token(access_token=token)
